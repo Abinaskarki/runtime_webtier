@@ -5,16 +5,16 @@ import requests
 import time
 
 app = Flask(__name__)
-app.register_blueprint(sse, url_prefix='/stream')
+#app.register_blueprint(sse, url_prefix='/stream')
 CORS(app)
 
 @app.route('/deals')
 def forwardStream():
-    r = requests.get('http://dbgenerator-db-grad-sandbox.apps.dblondon-3a1a.openshiftworkshop.com/streamTest', stream=True)
+    r = requests.get('http://localhost:8080/streamTest', stream=True)
     def eventStream():
             for line in r.iter_lines( chunk_size=1):
                 if line:
-                    yield 'xdata:{}\n\n'.format(line.decode())
+                    yield 'data:{}\n\n'.format(line.decode())
     return Response(eventStream(), mimetype="text/event-stream")
 
 @app.route('/client/testservice')
@@ -35,7 +35,7 @@ def get_message():
     return s
 
 def bootapp():
-    app.run(port=8080, threaded=True, host=('0.0.0.0'))
+    app.run(port=8090, threaded=True, host=('0.0.0.0'))
 
 if __name__ == '__main__':
      bootapp()
