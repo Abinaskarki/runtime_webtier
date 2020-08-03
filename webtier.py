@@ -19,13 +19,13 @@ def forwardStream():
 
 @app.route('/client/testservice')
 def client_to_server():
-    r = requests.get('http://localhost/testservice')
+    r = requests.get('http://localhost:8080/testservice')
     return Response(r.iter_lines(chunk_size=1), mimetype="text/json")
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template("index.html")
+    return "webtier service points are running..."
 
 
 def get_message():
