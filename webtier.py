@@ -20,6 +20,16 @@ def signup():
     
     return "false"
 
+@app.route('/login',methods = ['GET','POST'])
+def signup():
+    username= request.args.get('username')
+    password = request.args.get('password')
+    print(username, password)
+
+    if(len(username) > 0 and len(password) > 0):
+        return "true"
+    
+    return "false"
 
 @app.route('/deals')
 def forwardStream():
