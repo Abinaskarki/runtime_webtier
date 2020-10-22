@@ -1,12 +1,25 @@
 from flask import Flask, render_template, Response
 from flask_sse import sse
 from flask_cors import CORS
+from flask import request
 import requests
 import time
 
 app = Flask(__name__)
 #app.register_blueprint(sse, url_prefix='/stream')
 CORS(app)
+
+@app.route('/signup',methods = ['GET','POST'])
+def signup():
+    username= request.args.get('username')
+    password = request.args.get('password')
+    print(username, password)
+
+    if(len(username) > 0 and len(password) > 0):
+        return "true"
+    
+    return "false"
+
 
 @app.route('/deals')
 def forwardStream():
@@ -25,7 +38,7 @@ def client_to_server():
 @app.route('/')
 @app.route('/index')
 def index():
-    return "webtier service points are running..."
+    return "webtier service points are asdf running..."
 
 
 def get_message():
