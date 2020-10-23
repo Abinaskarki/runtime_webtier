@@ -9,27 +9,24 @@ app = Flask(__name__)
 #app.register_blueprint(sse, url_prefix='/stream')
 CORS(app)
 
-@app.route('/signup',methods = ['GET','POST'])
-def signup():
-    username= request.args.get('username')
-    password = request.args.get('password')
-    print(username, password)
-
-    if(len(username) > 0 and len(password) > 0):
-        return "true"
-    
-    return "false"
+@app.route('/dbconnect')
+def dbconnect():
+    dburl = "http://localhost:8080/dbconnect"
+    r = requests.get(dburl)
+    print(r)
+    res_value = r.text
+    return res_value
 
 @app.route('/login',methods = ['GET','POST'])
-def signup():
-    username= request.args.get('username')
+def login():
+    username = request.args.get('username')
     password = request.args.get('password')
-    print(username, password)
-
-    if(len(username) > 0 and len(password) > 0):
-        return "true"
-    
-    return "false"
+    print(username,password)
+    singupUrl = f"http://localhost:8080/login?username={username}&password={password}"
+    r = requests.get(singupUrl)
+    print(r)    
+    res_value = r.text
+    return res_value
 
 @app.route('/deals')
 def forwardStream():
